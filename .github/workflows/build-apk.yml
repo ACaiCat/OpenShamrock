@@ -85,7 +85,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: "${{ env.SHAMROCK_VERSION_ALL }}"
-          path: "${{ env.APK_FILE_ALL }}"
+          path: "${{ env.APK_FILE_ALL }}" 
 
       - name: Upload ARM64 APK RELEASE
         uses: actions/upload-artifact@v3
