@@ -110,9 +110,13 @@ internal class InitRemoteService : IAction {
                     val wsClient = WebSocketClientService(url, interval, wsHeaders)
                     wsClient.connect()
                     timer(initialDelay = 1000L, period = 1000L) {
-                        if (wsClient.isClosed || wsClient.isClosing) {
+                        try {
+                            if (wsClient.isClosed || wsClient.isClosing) {
                                 wsClient.reconnect()
                             }
+                        } catch (e: Throwable) {
+                            LogCenter.log(e.stackTraceToString(), Level.ERROR)
+                        }
                     } 
                 } else {
                     LogCenter.log("被动WebSocket地址不合法: $url", Level.ERROR)
