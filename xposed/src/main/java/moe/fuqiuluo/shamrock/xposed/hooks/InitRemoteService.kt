@@ -115,6 +115,7 @@ internal class InitRemoteService : IAction {
                                 wsClient.reconnect()
                             }
                         } catch (e: Throwable) {
+                            LogCenter.log(e.stackTraceToString(), Level.ERROR)
                         }
                     } 
                 } else {
