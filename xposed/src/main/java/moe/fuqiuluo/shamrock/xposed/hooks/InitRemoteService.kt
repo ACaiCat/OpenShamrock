@@ -109,11 +109,14 @@ internal class InitRemoteService : IAction {
                 if (url.startsWith("ws://") || url.startsWith("wss://")) {
                     val wsClient = WebSocketClientService(url, interval, wsHeaders)
                     wsClient.connect()
-                    timer(initialDelay = 5000L, period = 5000L) {
-                        if (wsClient.isClosed || wsClient.isClosing) {
-                            wsClient.reconnect()
+                    timer(initialDelay = 1000L, period = 1000L) {
+                        try {
+                            if (wsClient.isClosed || wsClient.isClosing) {
+                                wsClient.reconnect()
+                            }
+                        } catch (e: Throwable) {
                         }
-                    }
+                    } 
                 } else {
                     LogCenter.log("被动WebSocket地址不合法: $url", Level.ERROR)
                 }
